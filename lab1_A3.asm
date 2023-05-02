@@ -47,29 +47,29 @@ _start:
 					# begin at end of section
 
 	# Enter your code here ...
-#	movia r4, read_KEY0
-#	callr r4
-	movia r5, read_KEY3
-	callr r5
-		
+	movia r4, read_KEY0
+	callr r4
+#	movia r5, read_KEY3
+#	callr r5
+	
 	
 	read_KEY0:
-		movia r1, 0xFF200050
-		movi r3, 1
-		ldw r7, (r1)
-		and r2, r7 , r3
+		movia	r1, 0xFF200050
+		movi	r10, 1
+		ldw		r11, (r1)
+		and 	r2, r11, r10
+		call    End
 		
 	read_KEY3:
-		movia r1, 0xFF200050
-		movi r3, 8
-		ldw r7, (r1)
-		and r2, r7 , r3	
-		cmpeq r2, r3, r2
-
+		movia	r1, 0xFF200050
+		movi	r10, 8
+		ldw		r11, (r1)
+		and 	r2, r11, r10	
+		cmpeq 	r2, r10, r2
+		call    End
 
 endloop:
 	br endloop		# that's it
 
-###############################################
-	.end
-	
+End:
+    br End
