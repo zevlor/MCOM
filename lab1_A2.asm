@@ -1,24 +1,66 @@
-# An die PIO-Ausgabeeinheit LEDs sind zehn LEDs angeschlossen (Abbildung 2-1). Im
-# Simulator sind diese LEDs im rechten oberen Bereich des Benutzerfensters dargestellt
-# (Abbildung 3-1). Die PIO verfügt über nur ein Datenregister. Bit 0 dieses Registers
-# steuert LED0, Bit 1 steuert LED1 usw.. Ist eines dieser Bits gesetzt (logisch '1') so
-# leuchtet die korrespondierende LED, andernfalls nicht.
-# Erstellen Sie ein Unterprogramm 'write_LED'. Im Register r4 soll dem Unterprogramm
-# ein Zahlenwert übergeben. Die Bits dieses Zahlenwerts werden mit Hilfe der LEDs
-# visualisiert. Ist Bit 0 des Zahlenwertes gesetzt, so soll LED0 leuchten, ist Bit 1 gesetzt, so
-# soll LED1 leuchten usw..
+###############################################
+# MCOM-Labor: Vorlage fuer Assemblerprogramm
+# Edition History:
+# 28-04-2009: Getting Started - ms
+# 12-03-2014: Stack organization changed - ms
+###############################################
 
-# Load the base address of the PIO into a register (let's use r5).
-# Load the LED mask into another register (let's use r7).
-# Set the bit position to 0 (let's use r6).
-# Loop through the bits of the value in r4, starting with the least significant bit.
-# Extract the current bit of the value using a bitwise AND operation with the mask.
-# Shift the bit to the correct position using a shift left logical (SLL) operation with the bit position.
-# Write the resulting value to the PIO using a store word (STW) operation with the base address in r5.
-# Increase the bit position by 1.
-# If there are more bits to process, go back to step 5.
-# Restore the values of r5, r6, and r7 from the stack.
-# Return to the calling code using the return (RET) instruction.
+###############################################
+# Definition von symbolen Konstanten
+###############################################
+	.equ STACK_SIZE, 0x400	# stack size
 
-.global _start
+###############################################
+# DATA SECTION
+# assumption: 12 kByte data section (0 - 0x2fff)
+# stack is located in data section and starts
+# directly behind used data items at address
+# STACK_END.
+# Stack is growing downwards. Stack size
+# is given by STACK_SIZE. A full descending
+# stack is used, accordingly first stack item
+# is stored at address STACK_END+(STACKSIZE).
+###############################################	
+	.data
+TST_PAK1:
+	.word 0x11112222	# test data
+
+STACK_END:
+	.skip STACK_SIZE	# stack area filled with 0
+
+###############################################
+# TEXT SECTION
+# Executable code follows
+###############################################
+	.global _start
+	.text
 _start:
+	#######################################
+	# stack setup:
+	# HAVE Care: By default JNiosEmu sets stack pointer sp = 0x40000.
+	# That stack is not used here, because SoPC does not support
+	# such an address range. I. e. you should ignore the STACK
+	# section in JNiosEmu's memory window.
+	
+	movia	sp, STACK_END		# load data section's start address
+	addi	sp, sp, STACK_SIZE	# stack start position should
+					# begin at end of section
+
+	# Enter your code here ...
+	movia r4, write_led
+	callr r4
+	
+	
+	write_led:
+		movia r5, 0xff200000
+		movi r6, 4
+		stw r6, (r5)
+
+
+
+endloop:
+	br endloop		# that's it
+
+###############################################
+	.end
+	
