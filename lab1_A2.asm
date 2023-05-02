@@ -47,14 +47,13 @@ _start:
 					# begin at end of section
 
 	# Enter your code here ...
-	movia r4, write_led
-	callr r4
+	movi r4, 5
+	call write_led
 	
 	
 	write_led:
 		movia r5, 0xff200000
-		movi r6, 4
-		stw r6, (r5)
+		stw r4, (r5)
 
 
 
