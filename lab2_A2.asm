@@ -28,7 +28,7 @@ _start:
 loop:
     # Read button inputs
     movia r6, BUTTONS_BASE      # Load base address of button PIO into r6
-    ldw r7, 0(r6)           # Read button states into r7
+    ldw r7, (r6)           # Read button states into r7
 
     # Check if KEY0 (Zähltaste) is pressed
     andi r8, r7, 1          # Mask to check KEY0 state
@@ -40,23 +40,23 @@ loop:
 
     # Reset counter if KEY3 is pressed
     movia r9, 0             # Set counter value to 0
-    stw r9, 0(r4)           # Store reset counter value
+    stw r9, (r4)           # Store reset counter value
     call update_leds        # Call the subroutine to update LEDs
     br loop             # Repeat the loop
 
 increment_counter:
     # Increment counter if KEY0 is pressed
-    ldw r9, 0(r4)           # Load counter value into r9
+    ldw r9, (r4)           # Load counter value into r9
     add r9, r9, r5          # Add 1 to counter value
-    stw r9, 0(r4)           # Store updated counter value
+    stw r9, (r4)           # Store updated counter value
     call update_leds        # Call the subroutine to update LEDs
     br loop             # Repeat the loop
 
 update_leds:
     # Update LED display based on the counter value
-    ldw r9, 0(r4)           # Load counter value into r9
+    ldw r9, (r4)           # Load counter value into r9
     movia r10, LEDS_BASE        # Load base address of LED PIO into r10
-    stw r9, 0(r10)          # Store counter value to LED PIO
+    stw r9, (r10)          # Store counter value to LED PIO
     ret                     # Return from the subroutine
 
 ###############################################
