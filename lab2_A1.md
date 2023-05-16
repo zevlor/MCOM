@@ -1,7 +1,7 @@
 a) **Sinn und Zweck des vom CPU-Hersteller definierten ABI:**
    Der Sinn und Zweck des vom CPU-Hersteller definierten ABI besteht darin, eine einheitliche Methode zur Interaktion zwischen Software und Hardware bereitzustellen. Es ermöglicht die Kompatibilität von Programmen mit dem CPU-Design und erleichtert die Portabilität von Software auf verschiedenen Plattformen, die das ABI unterstützen.
 
-b) **Wesentliche Festlegungen des ABI:**
+b) **Wesentliche Festlegungen des ABI:**pukpuk
    Das ABI trifft wesentliche Festlegungen bezüglich der Nutzung der CPU-Register. Es gibt spezifische Register für die Rückgabewerte von Funktionen (r2 und r3) und für die Übertragung von Parametern an Unterprogramme (r4 bis r7). Es definiert auch die Nutzung der allgemein nutzbaren Register r8 bis r23, indem es Regeln für ihre Verwendung festlegt, um die Konsistenz und Sicherheit bei der Nutzung dieser Register zu gewährleisten.
 
 c) **Parameterübergabe für NIOS II CPU:**
