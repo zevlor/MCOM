@@ -26,9 +26,7 @@ _start:
     movi r5, 1              # Constant value 1 for incrementing
 
 loop:
-    # Read button inputs
-    movia r6, BUTTONS_BASE      # Load base address of button PIO into r6
-    ldw r7, (r6)           # Read button states into r7
+	call read_buttons
 
     # Check if KEY0 (Zähltaste) is pressed
     andi r8, r7, 1          # Mask to check KEY0 state
@@ -44,11 +42,10 @@ loop:
     call update_leds        # Call the subroutine to update LEDs
     br loop             # Repeat the loop
 
-wait_icrement:
-	# Read button inputs
-    movia r6, BUTTONS_BASE      # Load base address of button PIO into r6
-    ldw r7, (r6)           # Read button states into r7
-	
+                   # Return from the subroutine
+
+wait_increment:
+	call read_buttons
 	# Check if KEY0 (Zähltaste) is pressed
     andi r8, r7, 1          # Mask to check KEY0 state
     bne r8, r0, wait_increment  # Branch if KEY0 is pressed
@@ -62,6 +59,13 @@ increment_counter:
     stw r9, (r4)           # Store updated counter value
     call update_leds        # Call the subroutine to update LEDs
     br loop             # Repeat the loop
+
+
+read_buttons: 
+	# Read button inputs
+    movia r6, BUTTONS_BASE      # Load base address of button PIO into r6
+    ldw r7, (r6)           # Read button states into r7
+	ret  
 
 update_leds:
     # Update LED display based on the counter value
