@@ -54,7 +54,6 @@ increment_counter:
 
 update_leds:
     # Update LED display based on the counter value
-    ldw r9, (r4)           # Load counter value into r9
     movia r10, LEDS_BASE        # Load base address of LED PIO into r10
     stw r9, (r10)          # Store counter value to LED PIO
     ret                     # Return from the subroutine
