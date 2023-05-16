@@ -32,7 +32,7 @@ loop:
 
     # Check if KEY0 (Zähltaste) is pressed
     andi r8, r7, 1          # Mask to check KEY0 state
-    bne r8, r0, increment_counter  # Branch if KEY0 is pressed
+    bne r8, r0, wait_increment  # Branch if KEY0 is pressed
 
     # Check if KEY3 (Löschtaste) is pressed
     andi r8, r7, 8          # Mask to check KEY3 state
@@ -43,6 +43,17 @@ loop:
     stw r9, (r4)           # Store reset counter value
     call update_leds        # Call the subroutine to update LEDs
     br loop             # Repeat the loop
+
+wait_icrement:
+	# Read button inputs
+    movia r6, BUTTONS_BASE      # Load base address of button PIO into r6
+    ldw r7, (r6)           # Read button states into r7
+	
+	# Check if KEY0 (Zähltaste) is pressed
+    andi r8, r7, 1          # Mask to check KEY0 state
+    bne r8, r0, wait_increment  # Branch if KEY0 is pressed
+	br increment_counter  
+
 
 increment_counter:
     # Increment counter if KEY0 is pressed
