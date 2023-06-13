@@ -23,7 +23,7 @@ wait_timer:
     ret
 
 wait:
-    muli r4, r4, 10000     # multiply r4 by 10000 to have 0.1 ms cycles
+    muli r4, r4, 10000     # Multiply r4 by 10000 to have 0.1 ms cycles
     call init_timer        # Call the init_timer subroutine to set up the timer with the desired delay
     call wait_timer        # Call the wait_timer subroutine to wait for the specified time
 
