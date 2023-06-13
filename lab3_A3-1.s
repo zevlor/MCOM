@@ -10,7 +10,13 @@
 ###############################################
 .data
 DELAY: .word 5000
-
+.data
+status:	.word	0xFF202000
+control:	.word	0xFF202004
+periodl:	.word	0xFF202008
+periodh:	.word	0xFF20200C
+snapl:	.word	0xFF202010
+snaph:	.word	0xFF202014
 
 ###############################################
 # TEXT SECTION
