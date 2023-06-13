@@ -11,7 +11,7 @@ init_timer:
     stw r20, (r18)          # Store the lower 16 bits of the delay value to periodl register
     stw r21, (r19)          # Store the upper 16 bits of the delay value to periodh register
 
-    movi r22, 2             # Set the START bit (bit 2) in the control register
+    movi r22, 4             # Set the START bit (bit 2) in the control register
     stw r22, (r16)          # Start the timer by writing to the control register
     ret
 
