@@ -1,5 +1,7 @@
 • Welche Bedeutung haben die Register periodl und periodh?
+
 • Wie kann der Timer gestartet, wie kann er gestoppt werden?
+
 • Der Timer soll nicht im Interrupt-Modus betrieben werden. Wie kann das Erreichen einer vorgegebenen Verzögerungszeit (Timeout-Periode) festgestellt werden?
 
 Antwort:
