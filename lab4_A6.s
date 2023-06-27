@@ -26,7 +26,7 @@
  	
   	.equ	PIOS,	 0xff204060
 	.equ	PIO0,	0x1
-	
+	.equ    PIOS_IRQ, 0x3
 	.equ	BUTTONS_IRQ, 0x02	# Buttons PIO IRQ Level
 	.equ	KEY3, 		0x8		# KEY3 BITMASK
 	.equ	KEY0, 		0x1		# BITMASK für KEY0
