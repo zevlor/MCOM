@@ -23,6 +23,9 @@
 	.equ STACK_SIZE, 0x400		# stack size
 	.equ	LEDS, 	 0xFF200000	# base address of port LEDS
 	.equ	BUTTONS, 0xFF200050	# base address of port Buttons
+ 	
+  	.equ	PIOS,	 0xff204060
+	.equ	PIO0,	0x1
 	
 	.equ	BUTTONS_IRQ, 0x02	# Buttons PIO IRQ Level
 	.equ	KEY3, 		0x8		# KEY3 BITMASK
@@ -292,6 +295,12 @@ init_Buttons_PIO:
 	or r9, r9, r8
 	movia r8, BUTTONS
 	stw r9, 8(r8)
+	ret
+ init_pio_PIO:
+	movia r8, PIO0
+	movia r9, PIOS
+	stw r8, 4(r9)
+	stw r8, 8(r9)
 	ret
 
 ###############################################################
