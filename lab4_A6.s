@@ -137,7 +137,11 @@ KEY0_ISR:
 		push r8
 		push r15
 		push r9
-		
+
+movi r9, PIOS
+movi r8, PIO0
+stw r8, (r9)
+  
 		movi r9, 100
         movia r8, tp_adr
         ldw r8, (r8)
@@ -149,7 +153,10 @@ KEY0_ISR:
 		movia r15, tp_adr
         stw r8, (r15)
 		
-		
+
+movi r9, PIOS
+stw r0, (r9)
+  
 		pop r9
         pop r15
 		pop r8
