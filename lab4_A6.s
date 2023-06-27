@@ -309,6 +309,8 @@ init_Buttons_PIO:
 init_intController:
 	# enable (unmask) Buttons PIO interupts
 	movia r8, BUTTONS_IRQ
+	movia r9, PIOS_IRQ
+	or r8, r8, r9
 	rdctl r9, ctl3
 	or r9, r9, r8
 	wrctl ctl3, r9
