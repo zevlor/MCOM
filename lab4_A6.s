@@ -26,7 +26,6 @@
  	
   	.equ	PIOS,	 0xff204060
 	.equ	PIO0,	0x1
-	.equ    PIOS_IRQ, 0x3
 	.equ	BUTTONS_IRQ, 0x02	# Buttons PIO IRQ Level
 	.equ	KEY3, 		0x8		# KEY3 BITMASK
 	.equ	KEY0, 		0x1		# BITMASK für KEY0
@@ -300,7 +299,6 @@ init_Buttons_PIO:
 	movia r8, PIO0
 	movia r9, PIOS
 	stw r8, 4(r9)
-	stw r8, 8(r9)
 	ret
 
 ###############################################################
@@ -309,8 +307,6 @@ init_Buttons_PIO:
 init_intController:
 	# enable (unmask) Buttons PIO interupts
 	movia r8, BUTTONS_IRQ
-	movia r9, PIOS_IRQ
-	or r8, r8, r9
 	rdctl r9, ctl3
 	or r9, r9, r8
 	wrctl ctl3, r9
