@@ -74,6 +74,7 @@ snaph:  .word   0xFF202014
 ###############################################################
 .section .exceptions, "ax"
 interrupt_handler:
+
 	# Save used registers on stacks, r31 must be saved because
 	# subroutines are used, r8 has to be saved because we are
 	# executing an ISR
@@ -121,6 +122,7 @@ end_ir:
 	# Leave exception handler
 	subi ea, ea, 4
 	eret
+
 	
 ###############################################################
 # KEY0_ISR: KEY0 related interrupt handler.
@@ -130,13 +132,25 @@ end_ir:
 # increase LEDs intensity.
 ###############################################################
 KEY0_ISR:
-		movi r14, 1
-        movia r24, tp_adr
-        ldw r24, (r24)
-        add r24, r24, r14
+		push r8
+		push r15
+		push r9
+		
+		movi r9, 100
+        movia r8, tp_adr
+        ldw r8, (r8)
+		
+		bge r8, r9, KEY0_SKIP
+		
+        addi r8, r8, 1
+		KEY0_SKIP:
 		movia r15, tp_adr
-        stw r24, (r15)
-        
+        stw r8, (r15)
+		
+		
+		pop r9
+        pop r15
+		pop r8
 	ret
 	
 ###############################################################
@@ -146,12 +160,21 @@ KEY0_ISR:
 # in order to decrease LEDs intensity.
 ###############################################################
 KEY3_ISR:
-		movi r14, 1
-        movia r24, tp_adr
-        ldw r24, (r24)
-        sub r24, r24, r14
+		push r8
+		push r15
+		
+        movia r8, tp_adr
+        ldw r8, (r8)
+		
+		ble r8, r0, KEY3_SKIP
+		
+        subi r8, r8, 1
+		KEY3_SKIP:
 		movia r15, tp_adr
-        stw r24, (r15)
+        stw r8, (r15)
+		
+		pop r15
+		pop r8
 	ret
 	
 ###############################################################
@@ -173,7 +196,8 @@ _start:
 								# begin at end of section
 
 	# Enter your code here ...
-
+call init_intController
+call init_Buttons_PIO
 
 
 loop:
@@ -253,7 +277,7 @@ update_leds:
 endloop:
 	br endloop		# that's it
 
-	
+
 ###############################################################
 # init_Buttons_PIO
 # Initialize Buttons PIO for interrupt
@@ -289,4 +313,6 @@ init_intController:
 	ret
 
 ###############################################################
+
 	.end
+
