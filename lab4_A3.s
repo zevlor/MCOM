@@ -57,8 +57,7 @@ tp_adr:
 
 STACK_END:
 	.skip STACK_SIZE	# stack area filled with 0
-STOP_DELAY: .word 80
-START_DELAY: .word 20
+
 LEDS_BASE: .word    0xFF200000
 status: .word   0xFF202000
 control:    .word   0xFF202004
@@ -168,16 +167,18 @@ call update_leds
 call wait
 
 loop:
+
+    movia r8, 100
+    movia r15, tp_adr
+    sub r9, r8, r15
     
     movi r5, 3
     call update_leds
-    movia r15, STOP_DELAY
-    ldw r4, (r15)
+    ldw r4, (r9)
     call wait
     
     movi r5, 15
     call update_leds
-    movia r15, START_DELAY
     ldw r4, (r15)
     call wait
     
