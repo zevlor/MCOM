@@ -182,7 +182,6 @@ loop:
     call wait
     
     br loop
-call End
 
 init_timer:
     
